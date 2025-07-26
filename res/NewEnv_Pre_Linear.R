@@ -53,7 +53,7 @@ predict_linear<-function(trait, df_phe_train){
     df_predict_testEnvs<-as.data.frame(df_predict_testEnvs)
     df_predict_testEnvs<-df_predict_testEnvs[, sapply(df_predict_testEnvs,
                                                       function(x) all(x >= range_min & x <= range_max))]
-    if (ncol(df_predict_testEnvs) == 0) {
+    if (is.null(df_predict_testEnvs) || ncol(df_predict_testEnvs) == 0) {
       next
     }
     
