@@ -38,10 +38,10 @@ predict_linear<-function(trait, df_phe_train){
         rownames(df_mid) = df_mid[, 1]
         df_mid<-df_mid[, -1]
         
-        # 拟合非 testEnvs 和 Envs 的环境
+        # Fitting environments other than testEnvs and Envs
         df_test<-df_mid[-which(rownames(df_mid) %in% c(testEnvs, Envs)), ]
         model<-lm(Mater ~ Factor, data = df_test)
-        # 预测 testEnvs 和 Envs
+        # Predicting phenotypes of testEnvs and Envs
         df_predict_testEnvs[MaterID, FactorID] = predict(model, 
                                                          newdata = data.frame(x = df_mid[testEnvs, 'Factor', drop = FALSE]))
         df_predict_Envs[MaterID, FactorID] = predict(model, 
@@ -49,7 +49,7 @@ predict_linear<-function(trait, df_phe_train){
       }
     }
     
-    # 保留预测值都在范围内的因子
+    # Keep factors whose population prediction values are within the range
     df_predict_testEnvs<-as.data.frame(df_predict_testEnvs)
     df_predict_testEnvs<-df_predict_testEnvs[, sapply(df_predict_testEnvs,
                                                       function(x) all(x >= range_min & x <= range_max))]
