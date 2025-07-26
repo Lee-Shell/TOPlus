@@ -28,12 +28,12 @@ predict_nonlinear<-function(trait, df_phe_train){
     
     yhat<-function(x, i, j, Phe_M, factors_M) {
       train_envs = setdiff(colnames(factors_M), testEnvs)
-      # 提取因子值和表型值
+      # Factor values and phenotype values
       x_train<-as.numeric(factors_M[i, train_envs])
       y_train<-as.numeric(Phe_M[j, train_envs])
-      # 构建设计矩阵：列为 x^2, x, 1
+      # Construct the design matrix: columns are x^2, x, 1
       M_f<-cbind(x_train^2, x_train, 1)
-      # 计算回归系数并预测
+      # Calculation and prediction of regression coefficients
       coef<-ginv(M_f) %*% y_train
       y<-c(x^2, x, 1) %*% coef
       return(y)
