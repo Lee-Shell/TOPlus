@@ -61,8 +61,9 @@ predict_linear<-function(trait, df_phe_train){
     # Add testEnvs true phenotype
     df_predict_testEnvs$Raw<-Phe0[, which(colnames(Phe0) %in% testEnvs)]
     # Cor
-    cors<-sapply(df_predict_testEnvs[, -ncol(df_predict_testEnvs)], 
-                 function(col) cor(col, df_predict_testEnvs$Raw))
+    cors<-sapply(seq_len(ncol(df_predict_testEnvs) - 1), function(i) {
+      col<-df_predict_testEnvs[[i]]
+      cor(col, df_predict_testEnvs$Raw)})
     df_cor_testEnvs<-data.frame(FactorsRange = rownames(factors0)[seq_along(cors)], 
                                 Cor = cors, row.names = NULL)
     # Keep factors that pass the threshold
