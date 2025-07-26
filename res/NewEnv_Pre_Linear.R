@@ -52,8 +52,9 @@ predict_linear<-function(trait, df_phe_train){
     # Keep factors whose population prediction values are within the range
     df_predict_testEnvs<-as.data.frame(df_predict_testEnvs)
     df_predict_testEnvs<-df_predict_testEnvs[, sapply(df_predict_testEnvs,
-                                                      function(x) all(x >= range_min & x <= range_max))]
-    if (is.null(df_predict_testEnvs) || ncol(df_predict_testEnvs) == 0) {
+                                                      function(x) all(x >= range_min & x <= range_max)), 
+                                             drop = FALSE]
+    if (ncol(df_predict_testEnvs) == 0) {
       next
     }
     
