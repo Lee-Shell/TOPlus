@@ -27,7 +27,7 @@ totalEnvs = c('A', 'B', 'C', 'D')
 Envs = 'PreEnv'
 
 
-############ 单环境预测测试集表型 + 构建伪真训练集 ############ 
+############ Single environment prediction test set phenotype + construction of pseudo-true training set ############ 
 source('SingleEnv_Pre.R')
 
 Kinship<-A.mat(t(Genotype))
@@ -46,7 +46,7 @@ Phe_Train_Pseudo<-read.table("Phe_Train_Pseudo.txt", header = TRUE, sep = "\t")
 Phe_Test<-read.table("Phe_Test.txt", header = TRUE, sep = "\t")
 
 
-############ 跨环境预测表型 ############ 
+############ Predicting phenotypes across environments ############ 
 source('NewEnv_Pre_Linear.R')
 source('NewEnv_Pre_Nonlinear.R')
 
@@ -61,30 +61,30 @@ Phe_Envs_Train_Pseudo<-data.frame()
 Phe_Envs_Test<-data.frame()
 for (trait in Traits) {
   if (trait %in% c('DTA', 'DTS', 'DTT')) {
-    # 训练集
+    # Training set
     phe<-predict_linear(trait, Phe_Train)
     Phe_Envs_Train<-rbind(Phe_Envs_Train, phe)
-    # 伪真训练集
+    # Pseudo-real training set
     phe<-predict_linear(trait, Phe_Train_Pseudo)
     Phe_Envs_Train_Pseudo<-rbind(Phe_Envs_Train_Pseudo, phe)
-    # 测试集
+    # Testing set
     phe<-predict_linear(trait, Phe_Test)
     Phe_Envs_Test<-rbind(Phe_Envs_Test, phe)
   }else{
-    # 训练集
+    # Training set
     phe<-predict_nonlinear(trait, Phe_Train)
     Phe_Envs_Train<-rbind(Phe_Envs_Train, phe)
-    # 伪真训练集
+    # Pseudo-real training set
     phe<-predict_nonlinear(trait, Phe_Train_Pseudo)
     Phe_Envs_Train_Pseudo<-rbind(Phe_Envs_Train_Pseudo, phe)
-    # 测试集
+    # Testing set
     phe<-predict_nonlinear(trait, Phe_Test)
     Phe_Envs_Test<-rbind(Phe_Envs_Test, phe)
   }
 }
 
 
-############ 挑选材料 ############ 
+############ Select materials ############ 
 source('SmartTOP_Pre.R')
 source('SmartGP.R')
 source('ChooseMaterial.R')
