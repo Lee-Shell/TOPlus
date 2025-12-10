@@ -41,9 +41,6 @@ for (trait in Traits) {
   Phe_Test<-rbind(Phe_Test, res$Prediction_Test)
 }
 
-Phe_Train_Pseudo<-read.table("Phe_Train_Pseudo.txt", header = TRUE, sep = "\t")
-Phe_Test<-read.table("Phe_Test.txt", header = TRUE, sep = "\t")
-
 
 ############ Predicting phenotypes across environments ############ 
 source('NewEnv_Pre_Linear.R')
