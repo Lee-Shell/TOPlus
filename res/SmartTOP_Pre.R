@@ -11,7 +11,7 @@
 # n: pool size
 # m: the number of random permutations
 # target: a given target
-###########################TOP model construction and test TOP model
+###### TOP model construction and test TOP model
 prePro<-function(data){
  Mean<-apply(data,2,mean)
  SD<-apply(data,2,sd)
@@ -60,7 +60,7 @@ rate[k]<-sum(a)/(floor(dim(Pre_test_M)[1]/n)*n)
 return(mean(rate))
 }
 
-###############################################################Learn optimal weights
+###### Learn optimal weights
 
 Weight_res<-function(predicted_train0,observeded_train,names_trait,b){
 
@@ -119,7 +119,7 @@ model=list(W_matrix=W_matrix,pre_mean=pre_Pro$Mean,pre_sd=pre_Pro$SD,obs_mean=ob
 return(model)
 }
 
-#################################################################Test the top model
+###### Test the top model
 Test_top_acc<-function(predicted_test,observeded_test,W,names_trait,N,m){ 
 
 Ib<-match(W[,1],names_trait)
@@ -161,7 +161,7 @@ rownames(similarity_matrix)=colnames(similarity_matrix)=paste('id',1:5,sep='')
 return(similarity_matrix)
 }
 
-############################################################Select similar individuals for a given target
+###### Select similar individuals for a given target
 
 Tpro<-function(w,ta_M){
 	pi_M<-NULL
@@ -193,49 +193,4 @@ names_select<-names_test[select]
 values_select<-Pre_test[select,]
 model=list(names_select=names_select,values_select=values_select,similarity0=similarity0)
 return(model)
-}
-
-plot_SmartTOP<-function(target,trait_test,Top_target_sel_name,improve_trait,group_random=5){
-value_t<-trait_test[match(Top_target_sel_name,names_test),]
-value_r<-matrix(0,nrow=(nrow(value_t)*group_random),ncol=ncol(value_t))
-value_r_imp<-NULL
-set.seed(123)
-for (i in 1:group_random){
-value_r[((i-1)*nrow(value_t)+1):(i*nrow(value_t)),]<-trait_test[sample(1:nrow(trait_test))[1:length(Top_target_sel_name)],]
-value_r_imp<-c(value_r_imp,value_r[((i-1)*nrow(value_t)+1):(i*nrow(value_t)),improve_trait])
-}
-Cdata<-c(value_t[,improve_trait],value_r_imp)
-CL<-c(rep("SmartTOP",nrow(value_t)),rep("Random",(nrow(value_t)*group_random)))
-Select_mode<-factor(CL,levels=c("SmartTOP","Random"))
-mydata<-data.frame(CL,Cdata)
-p1=ggplot(mydata,aes(x=Cdata,fill=Select_mode))+
-  geom_density(alpha=.3)+
-  ylab('Density')+
-  scale_x_continuous(limits=c(65,80),breaks=seq(65,80,5))+
-  scale_y_continuous(limits=c(0,0.15),breaks=seq(0,0.15,0.05))+
-  xlab(paste("Trait",improve_trait,sep=""))+scale_fill_manual(values = c("#F8766D","#619CFF"))+
-  guides(fill=guide_legend(title=NULL))+
-   theme_bw()+
-  theme(legend.title=element_blank(),legend.position=c(0.1, 0.95),legend.text = element_text(size=8),
-legend.key.size=unit(0.3,'cm'),legend.key = element_blank(),legend.background = element_blank())
-
- ggsave("./res/demo_density.png")
-CMatrix<-rbind(target,value_t,value_r)
-CMS<-apply(CMatrix,2,function(x){(x-min(x))/(max(x)-min(x))})
-SM0<-as.matrix(rep(1,(nrow(CMS)-1)))%*%as.numeric(CMS[1,])
-SM<-CMS[2:nrow(CMS),]-SM0
-MSE1<-apply(SM[1:nrow(value_t),-improve_trait],1,function(x){mean(x^2)})
-MSE2<-apply(SM[(nrow(value_t)+1):nrow(SM),-improve_trait],1,function(x){mean(x^2)})
-Cdata1<-c(MSE1,MSE2)
-mydata1<-data.frame(CL,Cdata1)
-p2=ggplot(mydata1,aes(x=Select_mode,y=Cdata1,fill=Select_mode))+ geom_boxplot(alpha=.3) +
-scale_fill_manual(values = c("#F8766D","#619CFF"))+
-  ylab(paste('MSE without Trait',improve_trait,sep="") )+ 
-  xlab("")+
-  guides(fill=guide_legend(title=NULL))+
-  theme_bw()+
-  theme(legend.position="none")
-  ggsave("./res/demo_MSE_boxplot.png")
- model=list(p1=p1,p2=p2)
- return(model)
 }
