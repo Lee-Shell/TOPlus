@@ -13,7 +13,7 @@ PR<-function(dt,A,nut){
 predict_BLUP_one_trait<-function(trait, Genotype, Phenotype, Kinship, Kinship_Train, Num_Fold = 10){
   set.seed(923)
   
-  # 填补缺失值
+  # Fill missing values
   Phenotype<-Phenotype %>% 
     group_by(Traits, Envs) %>% 
     mutate(Value = ifelse(is.na(Value), mean(Value, na.rm = TRUE), Value)) %>%
@@ -28,8 +28,9 @@ predict_BLUP_one_trait<-function(trait, Genotype, Phenotype, Kinship, Kinship_Tr
     train_vec<-phe_sub %>% filter(line_code %in% TrainID) %>% select(line_code, Value)
     
     GroupNum<-round(nrow(train_vec) / Num_Fold)
+
+    ## Construct a pseudo-training set based on the specified number of folds.
     train_pred_all<-data.frame()
-    
     for (i in 1:Num_Fold) {
       if (i < Num_Fold) {
         idx_test<-((i - 1) * GroupNum + 1):(i * GroupNum)
@@ -51,7 +52,7 @@ predict_BLUP_one_trait<-function(trait, Genotype, Phenotype, Kinship, Kinship_Tr
     
     Pseudo_Train<-rbind(Pseudo_Train, train_pred_all)
     
-    ## 测试集预测
+    ## Prediction testing set
     Order = c(TestID, TrainID)
     KA<-Kinship[Order, Order]
     train_value_df<-data.frame(line_code = as.character(TrainID)) %>% 
