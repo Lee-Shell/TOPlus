@@ -7,16 +7,16 @@ library(MASS)
 
 
 # Read genotype 
-Genotype<-read.table('00_Genotype.txt', header = TRUE, row.names = 1, sep = "\t")
+Genotype<-read.table('00_Genotype_Demo.txt', header = TRUE, row.names = 1, sep = "\t")
 
 # Read phenotype
-Phenotype<-read.table('00_Phenotype.txt', header = TRUE, sep = "\t")
+Phenotype<-read.table('00_Phenotype_Demo.txt', header = TRUE, sep = "\t")
 
 # Read environmental data
-EnvFactors<-read.table('00_Envs.txt', header = TRUE, sep = "\t")
+EnvFactors<-read.table('00_Envirotyping_Demo.txt', header = TRUE, sep = "\t")
 
 # Read known gene information
-Gene_SNP_pos<-read.table('00_Gene_SNP_Pos.txt', header = T, sep = '\t')
+Gene_SNP_pos<-read.table('00_Gene_SNP_Pos_Demo.txt', header = T, sep = '\t')
 
 Traits = unique(Phenotype$Traits)
 TrainID = unique(Phenotype$line_code)
