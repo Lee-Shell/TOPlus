@@ -27,7 +27,7 @@ Envs = 'PreEnv'
 
 
 ############ Single environment prediction test set phenotype + construction of pseudo-true training set ############ 
-source('SingleEnv_Pre.R')
+source('SingleEnvironmentPrediction.R')
 
 Kinship<-A.mat(t(Genotype))
 Kinship_Train<-Kinship[TrainID, TrainID]
@@ -43,8 +43,8 @@ for (trait in Traits) {
 
 
 ############ Predicting phenotypes across environments ############ 
-source('NewEnv_Pre_Linear.R')
-source('NewEnv_Pre_Nonlinear.R')
+source('LinearPrediction.R')
+source('NonlinearPrediction.R')
 
 Phe_Train<-Phenotype %>% 
   group_by(Traits, Envs) %>% 
@@ -81,9 +81,7 @@ for (trait in Traits) {
 
 
 ############ Select materials ############ 
-source('SmartTOP_Pre.R')
-source('SmartGP.R')
-source('ChooseMaterial.R')
+source('MaterialPrioritization.R')
 
 trait = 'EW' # Target traits
 trait_related = c('ERN', 'KNPR', 'KNPE', 'KWPE') # Traits that are strongly correlated with the target trait
@@ -92,4 +90,4 @@ improve_ratio = 0.1 # Change ratio of a trait value from the target
 targetID = 'Test4718' # Any material can be specified as a target
 
 MaterialID<-choose_material(trait, trait_related, selection_ratio, improve_ratio, targetID)
-write.table(MaterialID, file = 'Choose_MaterialID.txt', quote = F, col.name = F, row.names = F, sep = "\t")
+write.table(MaterialID, file = 'TOPlus_Recommended_Materials.txt', quote = F, col.name = F, row.names = F, sep = "\t")
