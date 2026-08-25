@@ -57,10 +57,18 @@ Executing this script reproduces the complete TOPlus prioritization workflow.
 TOPlus is implemented as a modular pipeline orchestrated by a master script.  
 The pipeline automatically selects linear or nonlinear prediction strategies depending on trait architecture.  
 ```text
-TOPlus.R
-  ├── SingleEnvironmentPrediction.R
-  ├── CrossEnvironmentPrediction/
-    ├── LinearPrediction.R
-    └── NonlinearPrediction.R
-  └── MaterialPrioritization.R
+TOPlus/
+├── TOPlus.R
+├── Data_demo/
+│   ├── 00_Genotype_Demo.txt
+│   ├── 00_Phenotype_Demo.txt
+│   ├── 00_Envirotyping_Demo.txt
+│   └── 00_Gene_SNP_Pos_Demo.txt
+├── res/
+│   ├── SingleEnvironmentPrediction.R
+│   ├── LinearPrediction.R
+│   ├── NonlinearPrediction.R
+│   └── MaterialPrioritization.R
+├── README.md
+└── LICENSE
 ```
