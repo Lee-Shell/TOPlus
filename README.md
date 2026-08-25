@@ -138,3 +138,11 @@ The demonstration datasets required to run the example workflow are provided in 
 
 The genotype and phenotype datasets used in the study are available from Zenodo:
 https://zenodo.org/records/18605163
+
+## Citation
+
+If you use TOPlus in your research, please cite the associated manuscript:
+
+**TOPlus: An algorithm integrating prior genetic and environmental information for multi-trait synergic selection in maize hybrid breeding**
+
+Full citation information and the DOI will be updated upon publication.
