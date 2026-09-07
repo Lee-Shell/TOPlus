@@ -141,8 +141,6 @@ https://zenodo.org/records/18605163
 
 ## Citation
 
-If you use TOPlus in your research, please cite the associated manuscript:
+If you use TOPlus in your research, please cite:
 
-**TOPlus: An algorithm integrating prior genetic and environmental information for multi-trait synergic selection in maize hybrid breeding**
-
-Full citation information and the DOI will be updated upon publication.
+Fang et al. (2026). TOPlus: An algorithm integrating prior genetic and environmental information for multi-trait synergic selection in maize hybrid breeding. *Plant Communications*. https://doi.org/10.1016/j.xplc.2026.102089
